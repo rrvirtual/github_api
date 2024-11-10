@@ -15,6 +15,17 @@
 #include <getopt.h>
 #include "help.h"
 
+/************ DATA TYPES, CONSTANTS, MACROS ***********************************/
+
+/******************************************************************************/
+
+/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
+/*!
+ * @brief function to implement help usage
+ * @param[in] progname pointer as String
+ * @param[in] longopts as struct option
+ * @param[in] help help_description_t
+ */
 void
 help_usage(char *progname, const struct option *longopts,
                const help_description_t *help)
@@ -30,3 +41,4 @@ help_usage(char *progname, const struct option *longopts,
 
 	exit(EXIT_FAILURE);
 }
+/******************************************************************************/

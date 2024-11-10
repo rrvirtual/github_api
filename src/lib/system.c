@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include "system.h"
 
+/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
 /*!
  * @brief generic function to free a pointer dynamically allocated (malloc).
  * @param[in] **p pointer address
@@ -25,3 +26,4 @@ system_free(void **p)
 		*p = NULL;
 	}
 }
+/******************************************************************************/
