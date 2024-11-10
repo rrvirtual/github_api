@@ -59,8 +59,8 @@ int github_get_user_info(github_conf_t *p_github_conf)
 		ret = EXIT_FAILURE;
 		goto out;
 	}
-	// printf("p_repos_url = %s\n", p_repos_url->valuestring);
-	snprintf(p_github_conf->repos_url, MAX_URL_LENGHT, p_repos_url->valuestring);
+
+	snprintf(p_github_conf->repos_url, MAX_URL_LENGHT, "%s", p_repos_url->valuestring);
 
 	cJSON *p_login = cJSON_GetObjectItem(p_json, "login");
 	if (!p_login)
@@ -68,8 +68,8 @@ int github_get_user_info(github_conf_t *p_github_conf)
 		ret = EXIT_FAILURE;
 		goto out;
 	}
-	// printf("p_login = %s\n", p_repos_url->valuestring);
-	snprintf(p_github_conf->login, GITHUB_MAX_USR_LEN, p_login->valuestring);
+
+	snprintf(p_github_conf->login, GITHUB_MAX_USR_LEN, "%s", p_login->valuestring);
 
 out:
 	if (p_json)
