@@ -17,6 +17,7 @@ jobs:
         uses: deep5050/cppcheck-action@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
+          output_file: ./reports/cppcheck_report.txt
           
         
       - name: publish report    
