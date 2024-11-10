@@ -1,13 +1,13 @@
-src/lib/url.c:60:17: warning: Either the condition '!user_data' is redundant or there is possible null pointer dereference: data. [nullPointerRedundantCheck]
+src/lib/url.c:66:17: warning: Either the condition '!user_data' is redundant or there is possible null pointer dereference: data. [nullPointerRedundantCheck]
  size_t index = data->size;
                 ^
-src/lib/url.c:64:33: note: Assuming that condition '!user_data' is not redundant
+src/lib/url.c:70:33: note: Assuming that condition '!user_data' is not redundant
  if (!ptr || !size || !nmemb || !user_data)
                                 ^
-src/lib/url.c:59:26: note: Assignment 'data=(struct url_data*)user_data', assigned value is 0
+src/lib/url.c:65:26: note: Assignment 'data=(struct url_data*)user_data', assigned value is 0
  struct url_data *data = (struct url_data *)user_data;
                          ^
-src/lib/url.c:60:17: note: Null pointer dereference
+src/lib/url.c:66:17: note: Null pointer dereference
  size_t index = data->size;
                 ^
 test/test.c:6:0: style: The function 'setUp' is never used. [unusedFunction]
