@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: install build dependencies
+      run: |
+        git clone https://github.com/DaveGamble/cJSON.git
+        cd cJSON && make && sudo make install
     - name: Check out the repo
       uses: actions/checkout@v4
     - name: Compile the code
