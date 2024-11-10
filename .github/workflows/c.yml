@@ -18,8 +18,25 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN}}
           output_file: ./reports/cppcheck_report.txt
-          
-        
+
+      - name: publish report    
+        uses: mikeal/publish-to-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: 'main'
+
+  flawfinder:
+    name: flawfinder-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+    
+      - name: flawfinder
+        uses: david-a-wheeler/flawfinder@2.0.19
+        with:
+          arguments: '--sarif ./'
+          output: './reports/flawfinder_results.sarif'
+
       - name: publish report    
         uses: mikeal/publish-to-github-action@master
         env:
