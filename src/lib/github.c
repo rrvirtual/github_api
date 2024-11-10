@@ -30,13 +30,19 @@ int github_initialize(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
 
+	if (!p_github_conf)
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
+
 	p_github_conf->p_user_token = github_get_user_token();
 
 	if (!p_github_conf->p_user_token || strlen(p_github_conf->p_user_token ) == 0)
 		printf("\n Warning: You must set your github token on lib/github.conf, option GITHUB_USER_TOKEN\n\n");
 
 	ret = github_get_user_info(p_github_conf);
-	
+out:
 	return ret;
 }
 

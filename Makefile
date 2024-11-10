@@ -25,10 +25,10 @@ $(TARGET): $(OBJS)
 %.o: %.c
 	$(CC) -c -o $@ $(FLAGS) $(EXTRA_FLAGS) $(LD_FLAGS) $<
 
-#run_test:
-#	$(MAKE) -C test
+run_test:
+	$(MAKE) -C test
 
 clean:
 	rm -f src/*.o $(TARGET) $(OBJS) *.bak *~
-#	$(MAKE) clean -C test
+	$(MAKE) clean -C test
 
