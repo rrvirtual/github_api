@@ -36,17 +36,23 @@ typedef enum {
 	URL_METHOD_POST,
 	URL_METHOD_DELETE
 } e_url_method;
-
-char g_url_rfc3986[STR_CODE_TABLE_SIZE] = {0};
-char g_url_html5[STR_CODE_TABLE_SIZE] = {0};
 /******************************************************************************/
 
+/************ STATIC DATA DECLARATIONS ****************************************/
+static size_t
+write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
+/******************************************************************************/
 
+/************ PRIVATE FUNCTION PROTOTYPES *************************************/
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
 
+static char
+*curl_call_handler(const char *url, const char *auth_token, e_url_method url_method,
+                   const char *data_to_post, const curl_content_type_e content_type,
+                   long timeout, const bool b_insecure);
 
-
+/******************************************************************************/
 
 /************ PRIVATE FUNCTION BODIES *****************************************/
 /*!
@@ -90,12 +96,11 @@ write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
 	return size * nmemb;
 }
 
-
-
 /*!
  * @brief Handles URL GET/POST methods.
  * @warning The return pointer REQUIRE free()
  * @param[in] *url URL to call
+ * @param[in] auth_token as String format
  * @param[in] url_method as URL method (URL_METHOD_GET/URL_METHOD_POST)
  * @param[in] data_to_post as data do POST.
  * @param[in] content_type as type of POST HEADER
@@ -233,12 +238,14 @@ out:
 
 	return data.data;
 }
+/******************************************************************************/
 
-
+/************ PRIVATE FUNCTION BODIES *****************************************/
 /*!
  * @brief to call HTTPS URL as GET method.
  * @warning The return pointer REQUIRE free()
  * @param[in] *url_to_get as URL to call
+ * @param[in] auth_token as String format
  * @param[in] timeout timeout to GET call
  * @param[in] b_insecure TLS insecure. Does not validate server certificate
  * (Use with caution).
@@ -276,3 +283,4 @@ char
 	return curl_call_handler(url_to_delete, auth_token, URL_METHOD_DELETE, NULL,
 	                         CURL_CONTENT_TYPE_RAW, URL_DEFAULT_CURL_TIMEOUT, b_insecure);
 }
+/******************************************************************************/

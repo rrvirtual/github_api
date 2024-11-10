@@ -13,19 +13,33 @@
 #include <string.h>
 #include <stdbool.h>
 #include <string.h>
-
 #include <cjson/cJSON.h>
 
 #include "system.h"
 #include "github.h"
 
-// To make it simple, we create a function that returns the token
-// instead authenticate the user
+/************ DATA TYPES, CONSTANTS, MACROS ***********************************/
+
+/******************************************************************************/
+
+/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
+
+/*!
+ * @brief to call HTTPS URL as GET method.
+ * @warning To make it simple, we create a function that returns the token
+ * storaged in github.h
+ * @return pointer github token
+ */
 char *github_get_user_token(void)
 {
 	return GITHUB_USER_TOKEN;
 }
 
+/*!
+ * @brief initialize github struct.
+ * @param[in] p_github_conf as github_conf_t struct format
+ * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+ */
 int github_initialize(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
@@ -46,6 +60,11 @@ out:
 	return ret;
 }
 
+/*!
+ * @brief get github user informations
+ * @param[in] p_github_conf as github_conf_t struct format
+ * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+ */
 int github_get_user_info(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
@@ -85,6 +104,11 @@ out:
 	return ret;
 }
 
+/*!
+ * @brief get github user repo informations
+ * @param[in] p_github_conf as github_conf_t struct format
+ * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+ */
 int github_get_user_repo_list(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
@@ -122,6 +146,11 @@ out:
 	return ret;
 }
 
+/*!
+ * @brief create github repo 
+ * @param[in] p_repo_name name of repository as string format
+ * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+ */
 int github_create_user_repo(const char *p_repo_name)
 {
 	int ret = EXIT_SUCCESS;
@@ -183,6 +212,12 @@ out:
 	return ret;
 }
 
+/*!
+ * @brief delete github repo 
+ * @param[in] p_repo_name name of repository as string format
+ * @param[in] p_github_conf as github_conf_t struct format
+ * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+ */
 int github_delete_user_repo(const char *p_repo_name, github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
@@ -213,3 +248,4 @@ out:
 		system_free((void**)&p_ret_github);
 	return ret;
 }
+/******************************************************************************/

@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['url_5fhandle_5ftls_5fdelete_0',['url_handle_tls_delete',['../url_8c.html#a68d232d18aabcaf92fd92f40480d4f71',1,'url_handle_tls_delete(const char *url_to_delete, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a68d232d18aabcaf92fd92f40480d4f71',1,'url_handle_tls_delete(const char *url_to_delete, const char *auth_token, const bool b_insecure):&#160;url.c']]],
+  ['url_5fhandle_5ftls_5fget_1',['url_handle_tls_get',['../url_8c.html#a3dbb3a3373df48ee5de99ebb1d0edaf1',1,'url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a3dbb3a3373df48ee5de99ebb1d0edaf1',1,'url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure):&#160;url.c']]],
+  ['url_5fhandle_5ftls_5fpost_2',['url_handle_tls_post',['../url_8c.html#a4d7cc735615d1b881deef2b242d23510',1,'url_handle_tls_post(const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a4d7cc735615d1b881deef2b242d23510',1,'url_handle_tls_post(const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure):&#160;url.c']]]
+];
