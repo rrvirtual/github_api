@@ -12,6 +12,7 @@ jobs:
     steps:
     - name: install build dependencies
       run: |
+        sudo apt-get install libcurl4-openssl-dev
         git clone https://github.com/DaveGamble/cJSON.git
         cd cJSON && make && sudo make install
     - name: Check out the repo
