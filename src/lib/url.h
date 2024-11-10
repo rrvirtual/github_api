@@ -16,7 +16,6 @@ typedef enum
 /******************************************************************************/
 
 /************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
-void git_print_string(char *p_rcv_string);
 char
 *url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure);
 char
