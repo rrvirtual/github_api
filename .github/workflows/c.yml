@@ -46,12 +46,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: install build dependencies
-      run: |
-        sudo apt-get install libcurl4-openssl-dev
-        git clone https://github.com/DaveGamble/cJSON.git
-        cd cJSON && make && sudo make install
-    - name: Check out the repo
-      uses: actions/checkout@v4
-    - name: Compile the code
-      run: make
+      - name: install build dependencies
+        run: |
+          sudo apt-get install libcurl4-openssl-dev
+          git clone https://github.com/DaveGamble/cJSON.git
+          cd cJSON && make && sudo make install
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      - name: Compile the code
+        run: make
+
+  unittest:
+    name: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: install build dependencies
+        run: |
+          sudo apt-get install libcurl4-openssl-dev libcunit1 libcunit1-dev
+          git clone https://github.com/DaveGamble/cJSON.git
+          cd cJSON && make && sudo make install
+          sudo ldconfig
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      - name: Compile the code
+        run: make run_test
+
+      - name: Run Unit tests
+        run: ./test/run_test
