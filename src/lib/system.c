@@ -1,8 +1,8 @@
 
 /** @file system.c
-* @mainpage Generic library to implement system features
+* @brief System utility functions.
 *
-*  This API module implement generic function to handle the system
+* Provides common memory-management helpers.
 *
 * @par
 * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -12,10 +12,10 @@
 #include <stdlib.h>
 #include "system.h"
 
-/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
-/*!
- * @brief generic function to free a pointer dynamically allocated (malloc).
- * @param[in] **p pointer address
+/************ PUBLIC FUNCTION BODIES ******************************************/
+/**
+ * @brief Free a heap-allocated pointer and set it to NULL.
+ * @param[in,out] p Address of the pointer to free; must not be NULL.
  */
 void
 system_free(void **p)

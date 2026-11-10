@@ -1,7 +1,7 @@
 /** @file github.c
-* @mainpage Generic library to access Github
+* @brief GitHub API operations.
 *
-*  This API module access github through his API
+* Implements authenticated user and repository operations.
 *
 * @par
 * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -22,21 +22,20 @@
 
 /******************************************************************************/
 
-/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
-
-/*!
- * @brief Read the GitHub token from the GITHUB_TOKEN environment variable.
- * @return pointer to the environment-owned token, or NULL when unset
+/************ PUBLIC FUNCTION BODIES ******************************************/
+/**
+ * @brief Read the API token from the `GITHUB_TOKEN` environment variable.
+ * @return Borrowed pointer to the environment-owned token, or NULL if unset.
  */
 char *github_get_user_token(void)
 {
 	return getenv("GITHUB_TOKEN");
 }
 
-/*!
- * @brief initialize github struct.
- * @param[in] p_github_conf as github_conf_t struct format
- * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+/**
+ * @brief Initialize the configuration and retrieve the authenticated user.
+ * @param[out] p_github_conf Configuration structure to initialize.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
  */
 int github_initialize(github_conf_t *p_github_conf)
 {
@@ -61,10 +60,11 @@ out:
 	return ret;
 }
 
-/*!
- * @brief get github user informations
- * @param[in] p_github_conf as github_conf_t struct format
- * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+/**
+ * @brief Retrieve the authenticated user's login.
+ * @param[in,out] p_github_conf Configuration containing the token and receiving
+ *                              the user's login.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
  */
 int github_get_user_info(github_conf_t *p_github_conf)
 {
@@ -105,10 +105,10 @@ out:
 	return ret;
 }
 
-/*!
- * @brief get github user repo informations
- * @param[in] p_github_conf as github_conf_t struct format
- * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+/**
+ * @brief List all public and private repositories accessible to the token.
+ * @param[in] p_github_conf Configuration containing the API token.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
  */
 int github_get_user_repo_list(github_conf_t *p_github_conf)
 {
@@ -181,10 +181,10 @@ out:
 	return ret;
 }
 
-/*!
- * @brief create github repo 
- * @param[in] p_repo_name name of repository as string format
- * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+/**
+ * @brief Create a repository for the authenticated user.
+ * @param[in] p_repo_name Non-empty repository name.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
  */
 int github_create_user_repo(const char *p_repo_name)
 {
@@ -256,11 +256,11 @@ out:
 	return ret;
 }
 
-/*!
- * @brief delete github repo 
- * @param[in] p_repo_name name of repository as string format
- * @param[in] p_github_conf as github_conf_t struct format
- * @return EXIT_SUCCESS if runs well or EXIT_FAILURE
+/**
+ * @brief Delete a repository owned by the authenticated user.
+ * @param[in] p_repo_name Non-empty repository name.
+ * @param[in] p_github_conf Configuration containing the login and API token.
+ * @return EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
  */
 int github_delete_user_repo(const char *p_repo_name, github_conf_t *p_github_conf)
 {

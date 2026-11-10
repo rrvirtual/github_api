@@ -1,7 +1,7 @@
 /** @file github.c
-* @mainpage Program to access Github
+* @brief Command-line entry point for the GitHub API client.
 *
-*  Service to access github and do small task through its API
+* Executes the action selected from the command-line arguments.
 *
 * @par
 * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -18,9 +18,12 @@
 #include "params.h"
 
 /******************************************************************************/
-/*!
-* @brief Main function.
-*/
+/**
+ * @brief Parse command-line options and execute the selected GitHub operation.
+ * @param[in] argc Number of command-line arguments.
+ * @param[in] pp_argv Command-line argument vector.
+ * @return EXIT_SUCCESS when the operation succeeds, otherwise EXIT_FAILURE.
+ */
 int main(int argc, char **pp_argv)
 {
 	int ret = EXIT_SUCCESS;

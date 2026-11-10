@@ -1,8 +1,8 @@
 
 /** @file url.c
-* @mainpage Generic library to implement url access
+* @brief HTTP transport helpers based on libcurl.
 *
-*  This API module implement url calls methods
+* Implements authenticated GitHub API requests and response handling.
 *
 * @par
 * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -38,11 +38,6 @@ typedef enum {
 } e_url_method;
 /******************************************************************************/
 
-/************ STATIC DATA DECLARATIONS ****************************************/
-static size_t
-write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
-/******************************************************************************/
-
 /************ PRIVATE FUNCTION PROTOTYPES *************************************/
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
@@ -58,9 +53,14 @@ static char
 /******************************************************************************/
 
 /************ PRIVATE FUNCTION BODIES *****************************************/
-/*!
- * @brief Function to use with url_handle_url_to_post()
- * @return size of buffer
+/**
+ * @brief Append one response chunk to the dynamically allocated response body.
+ * @param[in] ptr Pointer to the received data chunk.
+ * @param[in] size Size in bytes of each data element.
+ * @param[in] nmemb Number of data elements in the chunk.
+ * @param[in,out] user_data Pointer to the response buffer state.
+ * @return Number of bytes consumed, or zero on invalid input or allocation
+ *         failure.
  */
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
@@ -100,6 +100,12 @@ write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
 	return size * nmemb;
 }
 
+/**
+ * @brief Append a header to a libcurl header list.
+ * @param[in,out] headers Address of the header-list pointer.
+ * @param[in] value Header line to append.
+ * @return true if the header was appended, otherwise false.
+ */
 static bool
 append_header(struct curl_slist **headers, const char *value)
 {
@@ -112,18 +118,18 @@ append_header(struct curl_slist **headers, const char *value)
 	return true;
 }
 
-/*!
- * @brief Handles URL GET/POST methods.
- * @warning The return pointer REQUIRE free()
- * @param[in] *url URL to call
- * @param[in] auth_token as String format
- * @param[in] url_method as URL method (URL_METHOD_GET/URL_METHOD_POST)
- * @param[in] data_to_post as data do POST.
- * @param[in] content_type as type of POST HEADER
- * @param[in] timeout timeout
- * @param[in] b_insecure TLS insecure. Does not validate server certificate
- * (Use with caution).
- * @return pointer to data return
+/**
+ * @brief Perform an authenticated HTTP request using libcurl.
+ * @param[in] url Absolute request URL, no longer than MAX_URL_LENGHT.
+ * @param[in] auth_token GitHub API token used for the Authorization header.
+ * @param[in] url_method HTTP method to perform.
+ * @param[in] data_to_post Request body for POST, otherwise NULL.
+ * @param[in] content_type Request content type.
+ * @param[in] timeout Request timeout in milliseconds.
+ * @param[in] b_insecure If true, disable TLS peer and host verification.
+ * @return Heap-allocated response body on a successful 2xx response; the caller
+ *         owns the result and must free it. Returns NULL on invalid input,
+ *         transport failure, or non-2xx response.
  */
 static char
 *curl_call_handler(const char *url, const char *auth_token, e_url_method url_method,
@@ -274,16 +280,14 @@ out:
 }
 /******************************************************************************/
 
-/************ PRIVATE FUNCTION BODIES *****************************************/
-/*!
- * @brief to call HTTPS URL as GET method.
- * @warning The return pointer REQUIRE free()
- * @param[in] *url_to_get as URL to call
- * @param[in] auth_token as String format
- * @param[in] timeout timeout to GET call
- * @param[in] b_insecure TLS insecure. Does not validate server certificate
- * (Use with caution).
- * @return pointer to data return
+/************ PUBLIC FUNCTION BODIES *****************************************/
+/**
+ * @brief Send an authenticated HTTPS GET request.
+ * @param[in] url_to_get Absolute request URL.
+ * @param[in] auth_token GitHub API token.
+ * @param[in] b_insecure If true, disable TLS certificate verification.
+ * @return Heap-allocated response body on success; caller must free it.
+ *         Returns NULL for invalid input or a failed request.
  */
 char
 *url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure)
@@ -292,16 +296,14 @@ char
 	                         URL_DEFAULT_CURL_TIMEOUT, b_insecure);
 }
 
-/*!
- * @brief to call HTTPS URL as POST method.
- * @warning The return pointer REQUIRE free()
- * @param[in] url_to_post as URL to call
- * @param[in] data_to_post as data do POST
- * @param[in] content_type as type of POST HEADER
- * @param[in] timeout timeout to POST call
- * @param[in] b_insecure TLS insecure. Does not validate server certificate
- * (Use with caution).
- * @return pointer to data return
+/**
+ * @brief Send an authenticated HTTPS POST request with a JSON body.
+ * @param[in] url_to_post Absolute request URL.
+ * @param[in] data_to_post JSON request body.
+ * @param[in] auth_token GitHub API token.
+ * @param[in] b_insecure If true, disable TLS certificate verification.
+ * @return Heap-allocated response body on success; caller must free it.
+ *         Returns NULL for invalid input or a failed request.
  */
 char
 *url_handle_tls_post(const char *url_to_post, const char *data_to_post,
@@ -311,6 +313,14 @@ char
 	                         CURL_CONTENT_TYPE_RAW, URL_DEFAULT_CURL_TIMEOUT, b_insecure);
 }
 
+/**
+ * @brief Send an authenticated HTTPS DELETE request.
+ * @param[in] url_to_delete Absolute request URL.
+ * @param[in] auth_token GitHub API token.
+ * @param[in] b_insecure If true, disable TLS certificate verification.
+ * @return Heap-allocated response body on success; caller must free it.
+ *         Returns NULL for invalid input or a failed request.
+ */
 char
 *url_handle_tls_delete(const char *url_to_delete, const char *auth_token, const bool b_insecure)
 {

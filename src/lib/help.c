@@ -1,7 +1,7 @@
 /** @file help.c
-* @mainpage Generic library to implement help
+* @brief Command-line help output.
 *
-*  This API module implement generic function to help usage program
+* Provides formatted usage and option descriptions.
 *
 * @par
 * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -19,12 +19,13 @@
 
 /******************************************************************************/
 
-/************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
-/*!
- * @brief function to implement help usage
- * @param[in] progname pointer as String
- * @param[in] longopts as struct option
- * @param[in] help help_description_t
+/************ PUBLIC FUNCTION BODIES ******************************************/
+/**
+ * @brief Print command-line usage and option descriptions, then exit.
+ * @param[in] progname Program path displayed in the usage line.
+ * @param[in] longopts NULL-terminated long-option table.
+ * @param[in] help NULL-terminated descriptions corresponding to longopts.
+ * @note This function terminates the process with EXIT_FAILURE.
  */
 void
 help_usage(char *progname, const struct option *longopts,

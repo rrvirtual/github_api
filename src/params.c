@@ -1,5 +1,5 @@
 /** @file params.c
- * @brief input arguments.
+ * @brief Command-line option parsing.
  *
  * @par
  * COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior.
@@ -42,6 +42,16 @@ static struct option const longopts[] =
 /******************************************************************************/
 
 /************ PUBLIC FUNCTION BODIES ******************************************/
+/**
+ * @brief Parse command-line options into a command argument structure.
+ *
+ * Displays usage information and exits when help is requested or the options
+ * do not select a valid action.
+ *
+ * @param[in] argc Number of command-line arguments.
+ * @param[in] argv Command-line argument vector.
+ * @return Pointer to static command arguments; valid until the next call.
+ */
 cmd_args_t
 *params_handle(int argc, char **argv)
 {
