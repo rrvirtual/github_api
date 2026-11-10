@@ -20,6 +20,7 @@ EXTRA_FLAGS=$(addprefix -D,$(DEFS))
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
+	mkdir -p $(dir $@)
 	$(CC) $(OBJS) $(FLAGS) $(EXTRA_FLAGS) $(LD_FLAGS) -o $(TARGET)
 
 %.o: %.c
