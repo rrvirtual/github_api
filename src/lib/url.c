@@ -13,12 +13,12 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <curl/curl.h>
 
-// #include "url.h"
+#include "url.h"
 #include "system.h"
-#include "github.h"
 
 
 /************ DATA TYPES, CONSTANTS, MACROS ***********************************/
@@ -47,6 +47,9 @@ write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *user_data);
 
+static bool
+append_header(struct curl_slist **headers, const char *value);
+
 static char
 *curl_call_handler(const char *url, const char *auth_token, e_url_method url_method,
                    const char *data_to_post, const curl_content_type_e content_type,
@@ -62,17 +65,22 @@ static char
 static size_t
 write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
 {
-	struct url_data *data = (struct url_data *)user_data;
-	size_t index = data->size;
-	size_t n = (size * nmemb);
-	char *tmp;
-
-	if (!ptr || !size || !nmemb || !user_data)
+	if (!ptr || !user_data || !size || !nmemb || nmemb > SIZE_MAX / size)
 	{
 		return 0;
 	}
 
-	data->size += (size * nmemb);
+	struct url_data *data = (struct url_data *)user_data;
+	size_t index = data->size;
+	size_t n = size * nmemb;
+	char *tmp;
+
+	if (n == SIZE_MAX || data->size > SIZE_MAX - n - 1)
+	{
+		return 0;
+	}
+
+	data->size += n;
 
 	tmp = realloc(data->data, data->size + 1); /* +1 for '\0' */
 
@@ -82,10 +90,6 @@ write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
 	}
 	else
 	{
-		if (data->data)
-		{
-			system_free((void **) &data->data);
-		}
 		fprintf(stderr, "Failed to allocate memory.\n");
 		return 0;
 	}
@@ -94,6 +98,18 @@ write_data(void *ptr, size_t size, size_t nmemb, void *user_data)
 	data->data[data->size] = '\0';
 
 	return size * nmemb;
+}
+
+static bool
+append_header(struct curl_slist **headers, const char *value)
+{
+	struct curl_slist *updated = curl_slist_append(*headers, value);
+	if (!updated)
+	{
+		return false;
+	}
+	*headers = updated;
+	return true;
 }
 
 /*!
@@ -114,60 +130,68 @@ static char
                    const char *data_to_post, const curl_content_type_e content_type,
                    long timeout, const bool b_insecure)
 {
-	if (!url)
+	if (!url || !url[0] || strlen(url) > MAX_URL_LENGHT ||
+	    !auth_token || !auth_token[0] ||
+	    (url_method == URL_METHOD_POST && !data_to_post))
 	{
 		return NULL;
 	}
 
+	struct url_data data = {0, NULL};
+	CURL *curl = NULL;
 	// Headers
 	struct curl_slist *headers = NULL;
 	if (URL_METHOD_POST == url_method)
 	{
 		if (content_type == CURL_CONTENT_TYPE_RAW)
 		{
-			headers = curl_slist_append(headers, "Accept: application/json");
-			headers = curl_slist_append(headers, "Content-Type: application/json");
+			if (!append_header(&headers, "Accept: application/json") ||
+			    !append_header(&headers, "Content-Type: application/json"))
+				goto out;
 		}
 
 		if (content_type == CURL_CONTENT_TYPE_X_FORM_WWW_URL_ENCODED)
 		{
-			headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+			if (!append_header(&headers, "Content-Type: application/x-www-form-urlencoded"))
+				goto out;
 		}
 
-		headers = curl_slist_append(headers, "charsets: utf-8");
+		if (!append_header(&headers, "charsets: utf-8"))
+			goto out;
 	}
 	else
 	{
 		if (content_type == CURL_CONTENT_TYPE_RAW)
 		{
-			headers = curl_slist_append(headers, "Accept: application/vnd.github+json");
-			headers = curl_slist_append(headers, "X-GitHub-Api-Version: 2022-11-28");
+			if (!append_header(&headers, "Accept: application/vnd.github+json") ||
+			    !append_header(&headers, "X-GitHub-Api-Version: 2022-11-28"))
+				goto out;
 		}
 
 		if (content_type == CURL_CONTENT_TYPE_X_FORM_WWW_URL_ENCODED)
 		{
-			headers = curl_slist_append(headers, "Content-Type: application/x-www-form-urlencoded");
+			if (!append_header(&headers, "Content-Type: application/x-www-form-urlencoded"))
+				goto out;
 		}
 	}
 
 	char auth_header[STR_CODE_TABLE_SIZE];
-	snprintf(auth_header, sizeof(auth_header), "Authorization: Bearer %s", auth_token);
-	headers = curl_slist_append(headers, auth_header);
+	int auth_header_len = snprintf(auth_header, sizeof(auth_header),
+	                               "Authorization: Bearer %s", auth_token);
+	if (auth_header_len < 0 || (size_t)auth_header_len >= sizeof(auth_header))
+		goto out;
+	if (!append_header(&headers, auth_header))
+		goto out;
 
 	if (!headers)
-	{
-		return NULL;
-	}
+		goto out;
 
-	struct url_data data;
-	data.data = NULL;
-	CURL *curl = curl_easy_init();
+	curl = curl_easy_init();
 	if (!curl)
 	{
 		goto out;
 	}
 
-	data.size = 0;
 	data.data = malloc(1); /* reasonable size initial buffer */
 	if (NULL == data.data)
 	{
@@ -222,6 +246,16 @@ static char
 			fprintf(stderr, "%s\n", curl_easy_strerror(res));
 		}
 		system_free((void **) &data.data);
+	}
+	else
+	{
+		long response_code = 0;
+		if (curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code) != CURLE_OK ||
+		    response_code < 200 || response_code >= 300)
+		{
+			fprintf(stderr, "GitHub API returned HTTP %ld.\n", response_code);
+			system_free((void **)&data.data);
+		}
 	}
 
 out:

@@ -1,6 +1,8 @@
 #ifndef URL_H_
 #define URL_H_
 
+#include <stdbool.h>
+
 /************ DATA TYPES, CONSTANTS, MACROS ***********************************/
 #define STR_CODE_TABLE_SIZE			256
 #define MAX_URL_LENGHT				2048

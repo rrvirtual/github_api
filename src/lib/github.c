@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include <string.h>
 #include <cjson/cJSON.h>
 
 #include "system.h"
@@ -25,14 +24,12 @@
 /************ PUBLIC FUNCTIONS PROTOTYPES ************************************/
 
 /*!
- * @brief to call HTTPS URL as GET method.
- * @warning To make it simple, we create a function that returns the token
- * storaged in github.h
- * @return pointer github token
+ * @brief Read the GitHub token from the GITHUB_TOKEN environment variable.
+ * @return pointer to the environment-owned token, or NULL when unset
  */
 char *github_get_user_token(void)
 {
-	return GITHUB_USER_TOKEN;
+	return getenv("GITHUB_TOKEN");
 }
 
 /*!
@@ -51,9 +48,12 @@ int github_initialize(github_conf_t *p_github_conf)
 	}
 
 	p_github_conf->p_user_token = github_get_user_token();
-
-	if (!p_github_conf->p_user_token || strlen(p_github_conf->p_user_token ) == 0)
-		printf("\n Warning: You must set your github token on lib/github.conf, option GITHUB_USER_TOKEN\n\n");
+	if (!p_github_conf->p_user_token || !p_github_conf->p_user_token[0])
+	{
+		fprintf(stderr, "Error: set the GITHUB_TOKEN environment variable.\n");
+		ret = EXIT_FAILURE;
+		goto out;
+	}
 
 	ret = github_get_user_info(p_github_conf);
 out:
@@ -68,33 +68,50 @@ out:
 int github_get_user_info(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
-	char *p_ret_github = url_handle_tls_get(GITHUB_API_USER_URL, p_github_conf->p_user_token, true);
+	if (!p_github_conf || !p_github_conf->p_user_token)
+		return EXIT_FAILURE;
+
+	char *p_ret_github = url_handle_tls_get(GITHUB_API_USER_URL, p_github_conf->p_user_token, false);
 
 	cJSON *p_json        = NULL;
 
 	p_json = cJSON_Parse(p_ret_github);
-	if (!p_json)
+	if (!cJSON_IsObject(p_json))
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
-	cJSON *p_repos_url = cJSON_GetObjectItem(p_json, "repos_url");
-	if (!p_repos_url)
-	{
-		ret = EXIT_FAILURE;
-		goto out;
-	}
-
-	snprintf(p_github_conf->repos_url, MAX_URL_LENGHT, "%s", p_repos_url->valuestring);
-
-	cJSON *p_login = cJSON_GetObjectItem(p_json, "login");
-	if (!p_login)
+	cJSON *p_repos_url = cJSON_GetObjectItemCaseSensitive(p_json, "repos_url");
+	if (!cJSON_IsString(p_repos_url) || !p_repos_url->valuestring)
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
 
-	snprintf(p_github_conf->login, GITHUB_MAX_USR_LEN, "%s", p_login->valuestring);
+	int repos_url_len = snprintf(p_github_conf->repos_url,
+	                             sizeof(p_github_conf->repos_url), "%s",
+	                             p_repos_url->valuestring);
+	if (repos_url_len < 0 ||
+	    (size_t)repos_url_len >= sizeof(p_github_conf->repos_url))
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
+
+	cJSON *p_login = cJSON_GetObjectItemCaseSensitive(p_json, "login");
+	if (!cJSON_IsString(p_login) || !p_login->valuestring)
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
+
+	int login_len = snprintf(p_github_conf->login, sizeof(p_github_conf->login), "%s",
+	                         p_login->valuestring);
+	if (login_len < 0 || (size_t)login_len >= sizeof(p_github_conf->login))
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
 
 out:
 	if (p_json)
@@ -113,13 +130,16 @@ int github_get_user_repo_list(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
 
-	char *p_ret_github = url_handle_tls_get((char *)p_github_conf->repos_url, GITHUB_USER_TOKEN, true);
+	if (!p_github_conf || !p_github_conf->p_user_token || !p_github_conf->repos_url[0])
+		return EXIT_FAILURE;
+
+	char *p_ret_github = url_handle_tls_get(p_github_conf->repos_url, p_github_conf->p_user_token, false);
 
 	cJSON *p_json = NULL;
 	cJSON *p_array = NULL;
 
 	p_json = cJSON_Parse(p_ret_github);
-	if (!p_json)
+	if (!cJSON_IsArray(p_json))
 	{
 		ret = EXIT_FAILURE;
 		goto out;
@@ -131,10 +151,13 @@ int github_get_user_repo_list(github_conf_t *p_github_conf)
 	for (int idx=0; idx < rcv_array_size; idx++)
 	{
 		p_array = cJSON_GetArrayItem(p_json, idx);
+		cJSON *p_name = cJSON_GetObjectItemCaseSensitive(p_array, "name");
+		if (!cJSON_IsString(p_name) || !p_name->valuestring)
 		{
-			cJSON *p_name = cJSON_GetObjectItem(p_array, "name");
-			printf("\tRepo Name: %s\n", p_name->valuestring);
+			ret = EXIT_FAILURE;
+			goto out;
 		}
+		printf("\tRepo Name: %s\n", p_name->valuestring);
 	}
 	printf("\n");
 
@@ -154,40 +177,49 @@ out:
 int github_create_user_repo(const char *p_repo_name)
 {
 	int ret = EXIT_SUCCESS;
+	cJSON *p_json = NULL;
+	cJSON *p_json_ret_github = NULL;
+	char *p_msg_to_send = NULL;
+	char *p_ret_github = NULL;
 
-	if (!p_repo_name)
+	if (!p_repo_name || !p_repo_name[0])
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
 
-	cJSON *p_json = NULL;
 	p_json = cJSON_CreateObject();
 	if (!p_json)
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
-	cJSON_AddStringToObject(p_json, "name", p_repo_name);
-	cJSON_AddStringToObject(p_json, "description", "Created by C github API");
-
-
-	char *p_msg_to_send	= NULL;
-	p_msg_to_send = cJSON_Print(p_json);
-
-	char *p_ret_github = url_handle_tls_post(GITHUB_API_CREATE_REPO, p_msg_to_send, GITHUB_USER_TOKEN, true);
-
-	cJSON *p_json_ret_github = NULL;
-
-	p_json_ret_github = cJSON_Parse(p_ret_github);
-	if (!p_json_ret_github)
+	if (!cJSON_AddStringToObject(p_json, "name", p_repo_name) ||
+	    !cJSON_AddStringToObject(p_json, "description", "Created by C github API"))
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
 
-	cJSON *p_repos_url = cJSON_GetObjectItem(p_json_ret_github, "name");
-	if (!p_repos_url)
+
+	p_msg_to_send = cJSON_Print(p_json);
+	if (!p_msg_to_send)
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
+
+	p_ret_github = url_handle_tls_post(GITHUB_API_CREATE_REPO, p_msg_to_send,
+	                                   github_get_user_token(), false);
+	p_json_ret_github = cJSON_Parse(p_ret_github);
+	if (!cJSON_IsObject(p_json_ret_github))
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
+
+	cJSON *p_repos_url = cJSON_GetObjectItemCaseSensitive(p_json_ret_github, "name");
+	if (!cJSON_IsString(p_repos_url) || !p_repos_url->valuestring)
 	{
 		printf("\n Error to create repository (%s)\n", p_repo_name);
 		ret = EXIT_FAILURE;
@@ -221,18 +253,32 @@ out:
 int github_delete_user_repo(const char *p_repo_name, github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
+	char *p_ret_github = NULL;
 
 	if (!p_repo_name)
 	{
 		ret = EXIT_FAILURE;
 		goto out;
 	}
+	if (!p_github_conf || !p_github_conf->p_user_token || !p_github_conf->login[0] ||
+	    !p_repo_name[0])
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
 
-	char github_repo_delete_url[MAX_URL_LENGHT];
-	snprintf(github_repo_delete_url, MAX_URL_LENGHT, "%s/%s/%s", GITHUB_API_DELETE_REPO, p_github_conf->login, p_repo_name);
+	char github_repo_delete_url[MAX_URL_LENGHT + 1];
+	int url_len = snprintf(github_repo_delete_url, sizeof(github_repo_delete_url),
+	                       "%s/%s/%s", GITHUB_API_DELETE_REPO,
+	                       p_github_conf->login, p_repo_name);
+	if (url_len < 0 || (size_t)url_len >= sizeof(github_repo_delete_url))
+	{
+		ret = EXIT_FAILURE;
+		goto out;
+	}
 
-	char *p_ret_github = NULL;
-	p_ret_github = url_handle_tls_delete(github_repo_delete_url, GITHUB_USER_TOKEN, true);
+	p_ret_github = url_handle_tls_delete(github_repo_delete_url,
+	                                     p_github_conf->p_user_token, false);
 
 	if (!p_ret_github || strlen(p_ret_github) != 0)
 	{

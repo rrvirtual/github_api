@@ -38,17 +38,18 @@ int main(int argc, char **pp_argv)
 	switch(p_prog_args->e_action_list)
 	{
 		case CREATE_REPO:
-			github_create_user_repo(p_prog_args->p_repo_name);
+			ret = github_create_user_repo(p_prog_args->p_repo_name);
 		break;
 		case DELETE_REPO:
-			github_delete_user_repo(p_prog_args->p_repo_name, &github_conf);
+			ret = github_delete_user_repo(p_prog_args->p_repo_name, &github_conf);
 		break;
 		case LIST_REPO:
-			github_get_user_repo_list(&github_conf);
+			ret = github_get_user_repo_list(&github_conf);
 		break;
 		case LIST_MR:
 		default:
 			printf("\n This module was not implemented! \n\n");
+			ret = EXIT_FAILURE;
 		break;
 	}
 

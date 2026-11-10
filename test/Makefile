@@ -15,6 +15,9 @@ EXTRA_FLAGS=$(addprefix -D,$(DEFS))
 
 all: $(TARGET)
 
+test: $(TARGET)
+	./$(TARGET)
+
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) $(FLAGS) $(EXTRA_FLAGS) $(LD_FLAGS) -o $(TARGET)
 
@@ -22,5 +25,9 @@ $(TARGET): $(OBJS)
 	$(CC) -c -o $@ $(FLAGS) $(EXTRA_FLAGS) $(LD_FLAGS) $<
 
 clean:
-	rm -f src/*.o $(TARGET) $(OBJS) *.bak *~s
+	rm -f $(OBJS) *.bak *~
 
+fclean: clean
+	rm -f $(TARGET)
+
+.PHONY: all test clean fclean

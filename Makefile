@@ -28,7 +28,17 @@ $(TARGET): $(OBJS)
 run_test:
 	$(MAKE) -C test
 
-clean:
-	rm -f src/*.o $(TARGET) $(OBJS) *.bak *~
-	$(MAKE) clean -C test
+test:
+	$(MAKE) -C test test
 
+clean:
+	$(MAKE) clean -C test
+	rm -f $(BIN_OBJ) $(LIB_OBJS) *.bak *~
+
+fclean: clean
+	rm -f $(TARGET)
+	$(MAKE) fclean -C test
+
+re: fclean all
+
+.PHONY: all run_test test clean fclean re

@@ -7,70 +7,41 @@ on:
     branches: [ "main" ]
 
 jobs:
-  cppcheck:
-    name: cppcheck-test
+  ci:
+    name: build-test-and-analyze
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-          
-      - name: cppcheck
-        uses: deep5050/cppcheck-action@main
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-          output_file: ./reports/cppcheck_report.txt
-
-      - name: publish report    
-        uses: mikeal/publish-to-github-action@master
+      - name: Check out this repository
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'main'
-
-  flawfinder:
-    name: flawfinder-test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-    
-      - name: flawfinder
-        uses: david-a-wheeler/flawfinder@2.0.19
-        with:
-          arguments: '--sarif ./'
-          output: './reports/flawfinder_results.sarif'
-
-      - name: publish report    
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'main'
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: install build dependencies
         run: |
-          sudo apt-get install libcurl4-openssl-dev
-          git clone https://github.com/DaveGamble/cJSON.git
-          cd cJSON && make && sudo make install
-      - name: Check out the repo
-        uses: actions/checkout@v4
-      - name: Compile the code
+          git init "$GITHUB_WORKSPACE"
+          git -C "$GITHUB_WORKSPACE" remote add origin "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY"
+          auth_header="$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
+          git -C "$GITHUB_WORKSPACE" -c "http.extraheader=AUTHORIZATION: basic $auth_header" fetch --no-tags --depth=1 origin "$GITHUB_REF"
+          git -C "$GITHUB_WORKSPACE" checkout --detach "$GITHUB_SHA"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes \
+            cppcheck \
+            flawfinder \
+            libcjson-dev \
+            libcunit1-dev \
+            libcurl4-openssl-dev
+
+      - name: Build
         run: make
 
-  unittest:
-    name: unit-tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: install build dependencies
-        run: |
-          sudo apt-get install libcurl4-openssl-dev libcunit1 libcunit1-dev
-          git clone https://github.com/DaveGamble/cJSON.git
-          cd cJSON && make && sudo make install
-          sudo ldconfig
-      - name: Check out the repo
-        uses: actions/checkout@v4
-      
-      - name: Compile the code
-        run: make run_test
+      - name: Run unit tests
+        run: make test
 
-      - name: Run Unit tests
-        run: ./test/run_test
+      - name: Run static analysis
+        run: |
+          mkdir -p reports
+          cppcheck --enable=warning,performance,portability --error-exitcode=1 \
+            --template=gcc src test 2>&1 | tee reports/cppcheck_report.txt
+          flawfinder --sarif src test > reports/flawfinder_results.sarif

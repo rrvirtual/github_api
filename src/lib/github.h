@@ -4,7 +4,6 @@
 #include "url.h"
 
 /************ DATA TYPES, CONSTANTS, MACROS ***********************************/
-#define GITHUB_USER_TOKEN	""
 #define GITHUB_API_USER_URL	"https://api.github.com/user"
 #define GITHUB_API_CREATE_REPO	"https://api.github.com/user/repos"
 #define GITHUB_API_DELETE_REPO	"https://api.github.com/repos"
