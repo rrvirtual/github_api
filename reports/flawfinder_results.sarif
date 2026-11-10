@@ -929,7 +929,7 @@
                   "startColumn": 3,
                   "endColumn": 53,
                   "snippet": {
-                    "text": "\t\tprintf(\"Erro to delete repo (%s)\\n\", p_repo_name);"
+                    "text": "\t\tprintf(\"Error deleting repository (%s)\\n\", p_repo_name);"
                   }
                 }
               }

@@ -5,12 +5,12 @@
 
 /************ DATA TYPES, CONSTANTS, MACROS ***********************************/
 #define GITHUB_API_USER_URL	"https://api.github.com/user"
+#define GITHUB_API_USER_REPOS_URL	"https://api.github.com/user/repos"
 #define GITHUB_API_CREATE_REPO	"https://api.github.com/user/repos"
 #define GITHUB_API_DELETE_REPO	"https://api.github.com/repos"
 #define GITHUB_MAX_USR_LEN      39 // Github documentation on 2024/11/09
 
 typedef struct github_conf_s {
-	char		repos_url[MAX_URL_LENGHT + 1];
 	char		login[GITHUB_MAX_USR_LEN + 1];
 	char		*p_user_token;
 } github_conf_t;

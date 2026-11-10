@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <stdbool.h>
 #include <cjson/cJSON.h>
@@ -81,23 +82,6 @@ int github_get_user_info(github_conf_t *p_github_conf)
 		ret = EXIT_FAILURE;
 		goto out;
 	}
-	cJSON *p_repos_url = cJSON_GetObjectItemCaseSensitive(p_json, "repos_url");
-	if (!cJSON_IsString(p_repos_url) || !p_repos_url->valuestring)
-	{
-		ret = EXIT_FAILURE;
-		goto out;
-	}
-
-	int repos_url_len = snprintf(p_github_conf->repos_url,
-	                             sizeof(p_github_conf->repos_url), "%s",
-	                             p_repos_url->valuestring);
-	if (repos_url_len < 0 ||
-	    (size_t)repos_url_len >= sizeof(p_github_conf->repos_url))
-	{
-		ret = EXIT_FAILURE;
-		goto out;
-	}
-
 	cJSON *p_login = cJSON_GetObjectItemCaseSensitive(p_json, "login");
 	if (!cJSON_IsString(p_login) || !p_login->valuestring)
 	{
@@ -129,42 +113,70 @@ out:
 int github_get_user_repo_list(github_conf_t *p_github_conf)
 {
 	int ret = EXIT_SUCCESS;
+	size_t page = 1;
+	char page_url[MAX_URL_LENGHT + 1];
+	char *p_ret_github = NULL;
+	cJSON *p_json = NULL;
 
-	if (!p_github_conf || !p_github_conf->p_user_token || !p_github_conf->repos_url[0])
+	if (!p_github_conf || !p_github_conf->p_user_token)
 		return EXIT_FAILURE;
 
-	char *p_ret_github = url_handle_tls_get(p_github_conf->repos_url, p_github_conf->p_user_token, false);
-
-	cJSON *p_json = NULL;
-	cJSON *p_array = NULL;
-
-	p_json = cJSON_Parse(p_ret_github);
-	if (!cJSON_IsArray(p_json))
-	{
-		ret = EXIT_FAILURE;
-		goto out;
-	}
-
-	int rcv_array_size = cJSON_GetArraySize(p_json);
-	// printf("p_repos_url %d \n", rcv_array_size);
 	printf("\n You have the repositories: \n");
-	for (int idx=0; idx < rcv_array_size; idx++)
+	while (true)
 	{
-		p_array = cJSON_GetArrayItem(p_json, idx);
-		cJSON *p_name = cJSON_GetObjectItemCaseSensitive(p_array, "name");
-		if (!cJSON_IsString(p_name) || !p_name->valuestring)
+		int page_url_len = snprintf(page_url, sizeof(page_url),
+		                            "%s?visibility=all&per_page=100&page=%zu",
+		                            GITHUB_API_USER_REPOS_URL, page);
+		if (page_url_len < 0 || (size_t)page_url_len >= sizeof(page_url))
 		{
 			ret = EXIT_FAILURE;
 			goto out;
 		}
-		printf("\tRepo Name: %s\n", p_name->valuestring);
+
+		p_ret_github = url_handle_tls_get(page_url, p_github_conf->p_user_token, false);
+		p_json = cJSON_Parse(p_ret_github);
+		if (!cJSON_IsArray(p_json))
+		{
+			ret = EXIT_FAILURE;
+			goto out;
+		}
+
+		int repo_count = cJSON_GetArraySize(p_json);
+		for (int idx = 0; idx < repo_count; idx++)
+		{
+			cJSON *p_repo = cJSON_GetArrayItem(p_json, idx);
+			cJSON *p_name = cJSON_GetObjectItemCaseSensitive(p_repo, "name");
+			cJSON *p_private = cJSON_GetObjectItemCaseSensitive(p_repo, "private");
+			if (!cJSON_IsObject(p_repo) || !cJSON_IsString(p_name) ||
+			    !p_name->valuestring || !cJSON_IsBool(p_private))
+			{
+				ret = EXIT_FAILURE;
+				goto out;
+			}
+
+			printf("\tRepo Name: %s (%s)\n", p_name->valuestring,
+			       cJSON_IsTrue(p_private) ? "private" : "public");
+		}
+
+		cJSON_Delete(p_json);
+		p_json = NULL;
+		system_free((void **)&p_ret_github);
+
+		if (repo_count < 100)
+			break;
+		if (page == SIZE_MAX)
+		{
+			ret = EXIT_FAILURE;
+			goto out;
+		}
+		page++;
 	}
 	printf("\n");
 
 out:
 	if (p_json)
 		cJSON_Delete(p_json);
-	if(p_ret_github)
+	if (p_ret_github)
 		system_free((void**)&p_ret_github);
 	return ret;
 }
@@ -282,7 +294,7 @@ int github_delete_user_repo(const char *p_repo_name, github_conf_t *p_github_con
 
 	if (!p_ret_github || strlen(p_ret_github) != 0)
 	{
-		printf("Erro to delete repo (%s)\n", p_repo_name);
+		printf("Error deleting repository (%s)\n", p_repo_name);
 		ret = EXIT_FAILURE;
 		goto out;
 	}

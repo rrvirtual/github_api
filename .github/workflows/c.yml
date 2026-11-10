@@ -47,11 +47,37 @@ jobs:
             --template=gcc src test 2>&1 | tee reports/cppcheck_report.txt
           flawfinder --sarif src test > reports/flawfinder_results.sarif
 
+      - name: Check whether source or Doxygen configuration changed
+        id: docs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$BEFORE_SHA" = "0000000000000000000000000000000000000000" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          auth_header="$(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 -w0)"
+          if git -c "http.extraheader=AUTHORIZATION: basic $auth_header" \
+              fetch --no-tags --depth=1 origin "$BEFORE_SHA"; then
+            if git diff --quiet "$BEFORE_SHA" "$GITHUB_SHA" -- src Doxyfile; then
+              echo "changed=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "changed=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "Could not fetch the previous revision; regenerating documentation."
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate HTML documentation
+        if: steps.docs.outputs.changed == 'true'
         run: doxygen Doxyfile
 
       - name: Update doc/html on main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: steps.docs.outputs.changed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
