@@ -1,21 +1,13 @@
 var searchData=
 [
-  ['test_2ec_0',['test.c',['../test_8c.html',1,'']]],
-  ['test_2eh_1',['test.h',['../test_8h.html',1,'']]],
-  ['test_5fgithub_2ec_2',['test_github.c',['../test__github_8c.html',1,'']]],
-  ['test_5fgithub_2eh_3',['test_github.h',['../test__github_8h.html',1,'']]],
-  ['test_5fgithub_5fmissing_5ftoken_4',['test_github_missing_token',['../test__github_8c.html#afeefca73972b2e0537dec0b5cc3047c2',1,'test_github_missing_token(void):&#160;test_github.c'],['../test__github_8h.html#afeefca73972b2e0537dec0b5cc3047c2',1,'test_github_missing_token(void):&#160;test_github.c']]],
-  ['test_5fgithub_5fnull_5fand_5fempty_5',['test_github_null_and_empty',['../test__github_8c.html#a469c9f5ef52025fb15664a50a3eba05c',1,'test_github_null_and_empty(void):&#160;test_github.c'],['../test__github_8h.html#a469c9f5ef52025fb15664a50a3eba05c',1,'test_github_null_and_empty(void):&#160;test_github.c']]],
-  ['test_5fgithub_5ftoken_5ffrom_5fenvironment_6',['test_github_token_from_environment',['../test__github_8c.html#ac3dbad6e761777ea3cb0d690d428c1e4',1,'test_github_token_from_environment(void):&#160;test_github.c'],['../test__github_8h.html#ac3dbad6e761777ea3cb0d690d428c1e4',1,'test_github_token_from_environment(void):&#160;test_github.c']]],
-  ['test_5flib_5fgithub_7',['test_lib_github',['../test_8c.html#ad31e20ee5e249133e39ccb6fca62615f',1,'test.c']]],
-  ['test_5flib_5fsystem_8',['test_lib_system',['../test_8c.html#abe099cc6eb52e861fd412d20ed14c442',1,'test.c']]],
-  ['test_5flib_5furl_9',['test_lib_url',['../test_8c.html#aefbc7976efbc9d96270bb6adb95ad6c4',1,'test.c']]],
-  ['test_5fsystem_2ec_10',['test_system.c',['../test__system_8c.html',1,'']]],
-  ['test_5fsystem_2eh_11',['test_system.h',['../test__system_8h.html',1,'']]],
-  ['test_5fsystem_5fnull_5fand_5fempty_12',['test_system_null_and_empty',['../test__system_8c.html#a0b59bc8c6d77dd10090ae1f24e0d8a94',1,'test_system_null_and_empty(void):&#160;test_system.c'],['../test__system_8h.html#a0b59bc8c6d77dd10090ae1f24e0d8a94',1,'test_system_null_and_empty(void):&#160;test_system.c']]],
-  ['test_5furl_2ec_13',['test_url.c',['../test__url_8c.html',1,'']]],
-  ['test_5furl_2eh_14',['test_url.h',['../test__url_8h.html',1,'']]],
-  ['test_5furl_5fnull_5fand_5fempty_15',['test_url_null_and_empty',['../test__url_8c.html#a31a4de6196bd49759b44bdc518065b0d',1,'test_url_null_and_empty(void):&#160;test_url.c'],['../test__url_8h.html#a31a4de6196bd49759b44bdc518065b0d',1,'test_url_null_and_empty(void):&#160;test_url.c']]],
-  ['to_20access_20github_16',['Program to access Github',['../index.html',1,'']]],
-  ['type_5faction_5fe_17',['type_action_e',['../params_8h.html#acdff9dd4762fd7c9743e02063c51c9fd',1,'params.h']]]
+  ['url_2ec_0',['url.c',['../url_8c.html',1,'']]],
+  ['url_2eh_1',['url.h',['../url_8h.html',1,'']]],
+  ['url_5fdata_2',['url_data',['../structurl__data.html',1,'']]],
+  ['url_5fdefault_5fcurl_5ftimeout_3',['URL_DEFAULT_CURL_TIMEOUT',['../url_8h.html#aaa1122adf7e5a8e4d63a9dea1f9e0410',1,'url.h']]],
+  ['url_5fhandle_5ftls_5fdelete_4',['url_handle_tls_delete',['../url_8c.html#a68d232d18aabcaf92fd92f40480d4f71',1,'url_handle_tls_delete(const char *url_to_delete, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a68d232d18aabcaf92fd92f40480d4f71',1,'url_handle_tls_delete(const char *url_to_delete, const char *auth_token, const bool b_insecure):&#160;url.c']]],
+  ['url_5fhandle_5ftls_5fget_5',['url_handle_tls_get',['../url_8c.html#a3dbb3a3373df48ee5de99ebb1d0edaf1',1,'url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a3dbb3a3373df48ee5de99ebb1d0edaf1',1,'url_handle_tls_get(const char *url_to_get, const char *auth_token, const bool b_insecure):&#160;url.c']]],
+  ['url_5fhandle_5ftls_5fpost_6',['url_handle_tls_post',['../url_8c.html#a4d7cc735615d1b881deef2b242d23510',1,'url_handle_tls_post(const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure):&#160;url.c'],['../url_8h.html#a4d7cc735615d1b881deef2b242d23510',1,'url_handle_tls_post(const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure):&#160;url.c']]],
+  ['url_5fmethod_5fdelete_7',['URL_METHOD_DELETE',['../url_8c.html#aef68fd2062a0a467108826fe2e81b8e6a1dcde7c17a21fbd0f0352396c56c6efc',1,'url.c']]],
+  ['url_5fmethod_5fget_8',['URL_METHOD_GET',['../url_8c.html#aef68fd2062a0a467108826fe2e81b8e6ae3f5b84572ec13c585c930b265aa5d43',1,'url.c']]],
+  ['url_5fmethod_5fpost_9',['URL_METHOD_POST',['../url_8c.html#aef68fd2062a0a467108826fe2e81b8e6a3e68c5080504c154992d2e01f99f7f72',1,'url.c']]]
 ];
