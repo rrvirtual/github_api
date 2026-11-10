@@ -125,10 +125,11 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a3dbb3a3373df48ee5de99ebb1d0edaf1" id="r_a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dbb3a3373df48ee5de99ebb1d0edaf1">url_handle_tls_get</a> (const char *url_to_get, const char *auth_token, const bool b_insecure)</td></tr>
-<tr class="memdesc:a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">to call HTTPS URL as GET method.  <br /></td></tr>
+<tr class="memdesc:a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS GET request.  <br /></td></tr>
 <tr class="memitem:a4d7cc735615d1b881deef2b242d23510" id="r_a4d7cc735615d1b881deef2b242d23510"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d7cc735615d1b881deef2b242d23510">url_handle_tls_post</a> (const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure)</td></tr>
-<tr class="memdesc:a4d7cc735615d1b881deef2b242d23510"><td class="mdescLeft">&#160;</td><td class="mdescRight">to call HTTPS URL as POST method.  <br /></td></tr>
+<tr class="memdesc:a4d7cc735615d1b881deef2b242d23510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS POST request with a JSON body.  <br /></td></tr>
 <tr class="memitem:a68d232d18aabcaf92fd92f40480d4f71" id="r_a68d232d18aabcaf92fd92f40480d4f71"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68d232d18aabcaf92fd92f40480d4f71">url_handle_tls_delete</a> (const char *url_to_delete, const char *auth_token, const bool b_insecure)</td></tr>
+<tr class="memdesc:a68d232d18aabcaf92fd92f40480d4f71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS DELETE request.  <br /></td></tr>
 </table>
 <a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
 <a id="a359c0a7d3e2fc00bb2fe4bc8e4c39b8a" name="a359c0a7d3e2fc00bb2fe4bc8e4c39b8a"></a>
@@ -232,6 +233,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Send an authenticated HTTPS DELETE request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_delete</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
+
 </div>
 </div>
 <a id="a3dbb3a3373df48ee5de99ebb1d0edaf1" name="a3dbb3a3373df48ee5de99ebb1d0edaf1"></a>
@@ -258,18 +270,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>to call HTTPS URL as GET method. </p>
-<dl class="section warning"><dt>Warning</dt><dd>The return pointer REQUIRE free() </dd></dl>
+<p>Send an authenticated HTTPS GET request. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*url_to_get</td><td>as URL to call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>as String format </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>timeout to GET call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>TLS insecure. Does not validate server certificate (Use with caution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_get</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to data return </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
 
 </div>
 </div>
@@ -302,19 +312,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>to call HTTPS URL as POST method. </p>
-<dl class="section warning"><dt>Warning</dt><dd>The return pointer REQUIRE free() </dd></dl>
+<p>Send an authenticated HTTPS POST request with a JSON body. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_post</td><td>as URL to call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_to_post</td><td>as data do POST </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">content_type</td><td>as type of POST HEADER </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>timeout to POST call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>TLS insecure. Does not validate server certificate (Use with caution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_post</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_to_post</td><td>JSON request body. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to data return </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
 
 </div>
 </div>

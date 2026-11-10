@@ -1,15 +1,14 @@
 var indexSectionsWithContent =
 {
-  0: "acdeghlmnpstu",
+  0: "acdeghlmnpstuw",
   1: "ghpu",
   2: "cghpstu",
-  3: "ghmpstu",
-  4: "adelps",
+  3: "acghmpstuw",
+  4: "adehlps",
   5: "cgh",
   6: "cet",
   7: "cdlnu",
-  8: "dgmsu",
-  9: "agpt"
+  8: "dgmsu"
 };
 
 var indexSectionNames =
@@ -22,8 +21,7 @@ var indexSectionNames =
   5: "typedefs",
   6: "enums",
   7: "enumvalues",
-  8: "defines",
-  9: "pages"
+  8: "defines"
 };
 
 var indexSectionLabels =
@@ -36,7 +34,6 @@ var indexSectionLabels =
   5: "Typedefs",
   6: "Enumerations",
   7: "Enumerator",
-  8: "Macros",
-  9: "Pages"
+  8: "Macros"
 };
 

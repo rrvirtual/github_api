@@ -80,6 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">github.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Command-line entry point for the GitHub API client.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdarg.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
@@ -110,9 +113,13 @@ Include dependency graph for github.c:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aacb81584d511818b576b90309532c72a" id="r_aacb81584d511818b576b90309532c72a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacb81584d511818b576b90309532c72a">main</a> (int argc, char **pp_argv)</td></tr>
-<tr class="memdesc:aacb81584d511818b576b90309532c72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Main function.  <br /></td></tr>
+<tr class="memdesc:aacb81584d511818b576b90309532c72a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse command-line options and execute the selected GitHub operation.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Command-line entry point for the GitHub API client. </p>
+<p>Executes the action selected from the command-line arguments.</p>
+<dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="aacb81584d511818b576b90309532c72a" name="aacb81584d511818b576b90309532c72a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacb81584d511818b576b90309532c72a">&#9670;&#160;</a></span>main()</h2>
 
@@ -132,7 +139,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Main function. </p>
+<p>Parse command-line options and execute the selected GitHub operation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argc</td><td>Number of command-line arguments. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pp_argv</td><td>Command-line argument vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS when the operation succeeds, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>

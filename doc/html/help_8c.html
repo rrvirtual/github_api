@@ -80,6 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">help.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Command-line help output.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;unistd.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
@@ -103,10 +106,14 @@ Include dependency graph for help.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a26025d40cdd17e4f73cb18c91009f69b" id="r_a26025d40cdd17e4f73cb18c91009f69b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26025d40cdd17e4f73cb18c91009f69b">help_usage</a> (char *progname, const struct option *longopts, const <a class="el" href="help_8h.html#a1c1759d107c2eeb9cbf5926fa94bfede">help_description_t</a> *help)</td></tr>
-<tr class="memdesc:a26025d40cdd17e4f73cb18c91009f69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">function to implement help usage  <br /></td></tr>
+<tr class="memitem:a26025d40cdd17e4f73cb18c91009f69b" id="r_a26025d40cdd17e4f73cb18c91009f69b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a26025d40cdd17e4f73cb18c91009f69b">help_usage</a> (char *progname, const struct option *<a class="el" href="params_8c.html#ab449a9b5605affbcf883b24fce6af41a">longopts</a>, const <a class="el" href="help_8h.html#a1c1759d107c2eeb9cbf5926fa94bfede">help_description_t</a> *<a class="el" href="params_8c.html#a851daaa4b15fcfa571a587989e3b94c5">help</a>)</td></tr>
+<tr class="memdesc:a26025d40cdd17e4f73cb18c91009f69b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print command-line usage and option descriptions, then exit.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Command-line help output. </p>
+<p>Provides formatted usage and option descriptions.</p>
+<dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a26025d40cdd17e4f73cb18c91009f69b" name="a26025d40cdd17e4f73cb18c91009f69b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a26025d40cdd17e4f73cb18c91009f69b">&#9670;&#160;</a></span>help_usage()</h2>
 
@@ -131,15 +138,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>function to implement help usage </p>
+<p>Print command-line usage and option descriptions, then exit. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">progname</td><td>pointer as String </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">longopts</td><td>as struct option </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">help</td><td><a class="el" href="help_8h.html#a1c1759d107c2eeb9cbf5926fa94bfede">help_description_t</a> </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">progname</td><td>Program path displayed in the usage line. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">longopts</td><td>NULL-terminated long-option table. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">help</td><td>NULL-terminated descriptions corresponding to longopts. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section note"><dt>Note</dt><dd>This function terminates the process with EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>

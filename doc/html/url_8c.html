@@ -82,6 +82,9 @@ $(function() {
   <div class="headertitle"><div class="title">url.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>HTTP transport helpers based on libcurl.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdarg.h&gt;</code><br />
 <code>#include &lt;stdbool.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
@@ -123,13 +126,24 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a8d5dc22cc978bd77929208a348944949" id="r_a8d5dc22cc978bd77929208a348944949"><td class="memItemLeft" align="right" valign="top">static size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d5dc22cc978bd77929208a348944949">write_data</a> (void *ptr, size_t size, size_t nmemb, void *user_data)</td></tr>
+<tr class="memdesc:a8d5dc22cc978bd77929208a348944949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append one response chunk to the dynamically allocated response body.  <br /></td></tr>
+<tr class="memitem:aa5b8c97eca19457343d236cac488b94b" id="r_aa5b8c97eca19457343d236cac488b94b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5b8c97eca19457343d236cac488b94b">append_header</a> (struct curl_slist **headers, const char *value)</td></tr>
+<tr class="memdesc:aa5b8c97eca19457343d236cac488b94b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append a header to a libcurl header list.  <br /></td></tr>
+<tr class="memitem:adccf427b7183ff7bdd823aedbd2986b2" id="r_adccf427b7183ff7bdd823aedbd2986b2"><td class="memItemLeft" align="right" valign="top">static char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adccf427b7183ff7bdd823aedbd2986b2">curl_call_handler</a> (const char *url, const char *auth_token, <a class="el" href="#aef68fd2062a0a467108826fe2e81b8e6">e_url_method</a> url_method, const char *data_to_post, const <a class="el" href="url_8h.html#ab16666fd31710250a64828cc2897cfd2">curl_content_type_e</a> content_type, long timeout, const bool b_insecure)</td></tr>
+<tr class="memdesc:adccf427b7183ff7bdd823aedbd2986b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perform an authenticated HTTP request using libcurl.  <br /></td></tr>
 <tr class="memitem:a3dbb3a3373df48ee5de99ebb1d0edaf1" id="r_a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3dbb3a3373df48ee5de99ebb1d0edaf1">url_handle_tls_get</a> (const char *url_to_get, const char *auth_token, const bool b_insecure)</td></tr>
-<tr class="memdesc:a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">to call HTTPS URL as GET method.  <br /></td></tr>
+<tr class="memdesc:a3dbb3a3373df48ee5de99ebb1d0edaf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS GET request.  <br /></td></tr>
 <tr class="memitem:a4d7cc735615d1b881deef2b242d23510" id="r_a4d7cc735615d1b881deef2b242d23510"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d7cc735615d1b881deef2b242d23510">url_handle_tls_post</a> (const char *url_to_post, const char *data_to_post, const char *auth_token, const bool b_insecure)</td></tr>
-<tr class="memdesc:a4d7cc735615d1b881deef2b242d23510"><td class="mdescLeft">&#160;</td><td class="mdescRight">to call HTTPS URL as POST method.  <br /></td></tr>
+<tr class="memdesc:a4d7cc735615d1b881deef2b242d23510"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS POST request with a JSON body.  <br /></td></tr>
 <tr class="memitem:a68d232d18aabcaf92fd92f40480d4f71" id="r_a68d232d18aabcaf92fd92f40480d4f71"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68d232d18aabcaf92fd92f40480d4f71">url_handle_tls_delete</a> (const char *url_to_delete, const char *auth_token, const bool b_insecure)</td></tr>
+<tr class="memdesc:a68d232d18aabcaf92fd92f40480d4f71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send an authenticated HTTPS DELETE request.  <br /></td></tr>
 </table>
-<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>HTTP transport helpers based on libcurl. </p>
+<p>Implements authenticated GitHub API requests and response handling.</p>
+<dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
+</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
 <a id="aef68fd2062a0a467108826fe2e81b8e6" name="aef68fd2062a0a467108826fe2e81b8e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aef68fd2062a0a467108826fe2e81b8e6">&#9670;&#160;</a></span>e_url_method</h2>
 
@@ -150,6 +164,114 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a id="aa5b8c97eca19457343d236cac488b94b" name="aa5b8c97eca19457343d236cac488b94b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b8c97eca19457343d236cac488b94b">&#9670;&#160;</a></span>append_header()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool append_header </td>
+          <td>(</td>
+          <td class="paramtype">struct curl_slist **</td>          <td class="paramname"><span class="paramname"><em>headers</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append a header to a libcurl header list. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">headers</td><td>Address of the header-list pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Header line to append. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>true if the header was appended, otherwise false. </dd></dl>
+
+</div>
+</div>
+<a id="adccf427b7183ff7bdd823aedbd2986b2" name="adccf427b7183ff7bdd823aedbd2986b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adccf427b7183ff7bdd823aedbd2986b2">&#9670;&#160;</a></span>curl_call_handler()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char * curl_call_handler </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>url</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>auth_token</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#aef68fd2062a0a467108826fe2e81b8e6">e_url_method</a></td>          <td class="paramname"><span class="paramname"><em>url_method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>data_to_post</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="url_8h.html#ab16666fd31710250a64828cc2897cfd2">curl_content_type_e</a></td>          <td class="paramname"><span class="paramname"><em>content_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">long</td>          <td class="paramname"><span class="paramname"><em>timeout</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool</td>          <td class="paramname"><span class="paramname"><em>b_insecure</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Perform an authenticated HTTP request using libcurl. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">url</td><td>Absolute request URL, no longer than MAX_URL_LENGHT. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token used for the Authorization header. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_method</td><td>HTTP method to perform. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_to_post</td><td>Request body for POST, otherwise NULL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">content_type</td><td>Request content type. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>Request timeout in milliseconds. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS peer and host verification. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on a successful 2xx response; the caller owns the result and must free it. Returns NULL on invalid input, transport failure, or non-2xx response. </dd></dl>
+
+</div>
+</div>
 <a id="a68d232d18aabcaf92fd92f40480d4f71" name="a68d232d18aabcaf92fd92f40480d4f71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a68d232d18aabcaf92fd92f40480d4f71">&#9670;&#160;</a></span>url_handle_tls_delete()</h2>
 
@@ -173,6 +295,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Send an authenticated HTTPS DELETE request. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_delete</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
 
 </div>
 </div>
@@ -200,18 +333,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>to call HTTPS URL as GET method. </p>
-<dl class="section warning"><dt>Warning</dt><dd>The return pointer REQUIRE free() </dd></dl>
+<p>Send an authenticated HTTPS GET request. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*url_to_get</td><td>as URL to call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>as String format </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>timeout to GET call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>TLS insecure. Does not validate server certificate (Use with caution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_get</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to data return </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
 
 </div>
 </div>
@@ -244,19 +375,68 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>to call HTTPS URL as POST method. </p>
-<dl class="section warning"><dt>Warning</dt><dd>The return pointer REQUIRE free() </dd></dl>
+<p>Send an authenticated HTTPS POST request with a JSON body. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_post</td><td>as URL to call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">data_to_post</td><td>as data do POST </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">content_type</td><td>as type of POST HEADER </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">timeout</td><td>timeout to POST call </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>TLS insecure. Does not validate server certificate (Use with caution). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">url_to_post</td><td>Absolute request URL. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data_to_post</td><td>JSON request body. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">auth_token</td><td>GitHub API token. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b_insecure</td><td>If true, disable TLS certificate verification. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>pointer to data return </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Heap-allocated response body on success; caller must free it. Returns NULL for invalid input or a failed request. </dd></dl>
+
+</div>
+</div>
+<a id="a8d5dc22cc978bd77929208a348944949" name="a8d5dc22cc978bd77929208a348944949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d5dc22cc978bd77929208a348944949">&#9670;&#160;</a></span>write_data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t write_data </td>
+          <td>(</td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>nmemb</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>user_data</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Append one response chunk to the dynamically allocated response body. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ptr</td><td>Pointer to the received data chunk. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>Size in bytes of each data element. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nmemb</td><td>Number of data elements in the chunk. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">user_data</td><td>Pointer to the response buffer state. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of bytes consumed, or zero on invalid input or allocation failure. </dd></dl>
 
 </div>
 </div>

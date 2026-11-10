@@ -80,6 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">system.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>System utility functions.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &quot;<a class="el" href="system_8h_source.html">system.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
@@ -96,9 +99,13 @@ Include dependency graph for system.c:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a5fb0ab0512c2bdd99411b2f2e1488b8b" id="r_a5fb0ab0512c2bdd99411b2f2e1488b8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fb0ab0512c2bdd99411b2f2e1488b8b">system_free</a> (void **p)</td></tr>
-<tr class="memdesc:a5fb0ab0512c2bdd99411b2f2e1488b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">generic function to free a pointer dynamically allocated (malloc).  <br /></td></tr>
+<tr class="memdesc:a5fb0ab0512c2bdd99411b2f2e1488b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free a heap-allocated pointer and set it to NULL.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>System utility functions. </p>
+<p>Provides common memory-management helpers.</p>
+<dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a5fb0ab0512c2bdd99411b2f2e1488b8b" name="a5fb0ab0512c2bdd99411b2f2e1488b8b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5fb0ab0512c2bdd99411b2f2e1488b8b">&#9670;&#160;</a></span>system_free()</h2>
 
@@ -114,10 +121,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>generic function to free a pointer dynamically allocated (malloc). </p>
+<p>Free a heap-allocated pointer and set it to NULL. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">**p</td><td>pointer address </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p</td><td>Address of the pointer to free; must not be NULL. </td></tr>
   </table>
   </dd>
 </dl>

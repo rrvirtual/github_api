@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['params_5fhandle_0',['params_handle',['../params_8c.html#ad24a8fb28d9ad93cd040400fccbe5a57',1,'params_handle(int argc, char **argv):&#160;params.c'],['../params_8h.html#ad24a8fb28d9ad93cd040400fccbe5a57',1,'params_handle(int argc, char **argv):&#160;params.c']]]
+  ['help_5fusage_0',['help_usage',['../help_8c.html#a26025d40cdd17e4f73cb18c91009f69b',1,'help_usage(char *progname, const struct option *longopts, const help_description_t *help):&#160;help.c'],['../help_8h.html#a26025d40cdd17e4f73cb18c91009f69b',1,'help_usage(char *progname, const struct option *longopts, const help_description_t *help):&#160;help.c']]]
 ];

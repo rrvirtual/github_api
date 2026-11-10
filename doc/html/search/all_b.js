@@ -16,6 +16,5 @@ var searchData=
   ['test_5furl_2ec_13',['test_url.c',['../test__url_8c.html',1,'']]],
   ['test_5furl_2eh_14',['test_url.h',['../test__url_8h.html',1,'']]],
   ['test_5furl_5fnull_5fand_5fempty_15',['test_url_null_and_empty',['../test__url_8c.html#a31a4de6196bd49759b44bdc518065b0d',1,'test_url_null_and_empty(void):&#160;test_url.c'],['../test__url_8h.html#a31a4de6196bd49759b44bdc518065b0d',1,'test_url_null_and_empty(void):&#160;test_url.c']]],
-  ['to_20access_20github_16',['Program to access Github',['../index.html',1,'']]],
-  ['type_5faction_5fe_17',['type_action_e',['../params_8h.html#acdff9dd4762fd7c9743e02063c51c9fd',1,'params.h']]]
+  ['type_5faction_5fe_16',['type_action_e',['../params_8h.html#acdff9dd4762fd7c9743e02063c51c9fd',1,'params.h']]]
 ];

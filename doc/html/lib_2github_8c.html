@@ -80,6 +80,9 @@ $(function() {
   <div class="headertitle"><div class="title">github.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>GitHub API operations.  
+<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
 <code>#include &lt;stdint.h&gt;</code><br />
@@ -108,19 +111,23 @@ Include dependency graph for github.c:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a6f8dca06180a3de35dac468e09ee2a45" id="r_a6f8dca06180a3de35dac468e09ee2a45"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f8dca06180a3de35dac468e09ee2a45">github_get_user_token</a> (void)</td></tr>
-<tr class="memdesc:a6f8dca06180a3de35dac468e09ee2a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the GitHub token from the GITHUB_TOKEN environment variable.  <br /></td></tr>
+<tr class="memdesc:a6f8dca06180a3de35dac468e09ee2a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the API token from the <span class="tt">GITHUB_TOKEN</span> environment variable.  <br /></td></tr>
 <tr class="memitem:a263eabab4eeec0c5fabe3a882638fad9" id="r_a263eabab4eeec0c5fabe3a882638fad9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a263eabab4eeec0c5fabe3a882638fad9">github_initialize</a> (<a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> *p_github_conf)</td></tr>
-<tr class="memdesc:a263eabab4eeec0c5fabe3a882638fad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">initialize github struct.  <br /></td></tr>
+<tr class="memdesc:a263eabab4eeec0c5fabe3a882638fad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the configuration and retrieve the authenticated user.  <br /></td></tr>
 <tr class="memitem:aec0e04d3967ade518d46d020721a249e" id="r_aec0e04d3967ade518d46d020721a249e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec0e04d3967ade518d46d020721a249e">github_get_user_info</a> (<a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> *p_github_conf)</td></tr>
-<tr class="memdesc:aec0e04d3967ade518d46d020721a249e"><td class="mdescLeft">&#160;</td><td class="mdescRight">get github user informations  <br /></td></tr>
+<tr class="memdesc:aec0e04d3967ade518d46d020721a249e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve the authenticated user's login.  <br /></td></tr>
 <tr class="memitem:ab514496a586eaf47961a5ee9256075c1" id="r_ab514496a586eaf47961a5ee9256075c1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab514496a586eaf47961a5ee9256075c1">github_get_user_repo_list</a> (<a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> *p_github_conf)</td></tr>
-<tr class="memdesc:ab514496a586eaf47961a5ee9256075c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">get github user repo informations  <br /></td></tr>
+<tr class="memdesc:ab514496a586eaf47961a5ee9256075c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">List all public and private repositories accessible to the token.  <br /></td></tr>
 <tr class="memitem:a388f54b8e126c40d787a447e451de8e8" id="r_a388f54b8e126c40d787a447e451de8e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a388f54b8e126c40d787a447e451de8e8">github_create_user_repo</a> (const char *p_repo_name)</td></tr>
-<tr class="memdesc:a388f54b8e126c40d787a447e451de8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">create github repo  <br /></td></tr>
+<tr class="memdesc:a388f54b8e126c40d787a447e451de8e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a repository for the authenticated user.  <br /></td></tr>
 <tr class="memitem:aeb503324134da60cb59e8c09e3cc10ba" id="r_aeb503324134da60cb59e8c09e3cc10ba"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb503324134da60cb59e8c09e3cc10ba">github_delete_user_repo</a> (const char *p_repo_name, <a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> *p_github_conf)</td></tr>
-<tr class="memdesc:aeb503324134da60cb59e8c09e3cc10ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">delete github repo  <br /></td></tr>
+<tr class="memdesc:aeb503324134da60cb59e8c09e3cc10ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete a repository owned by the authenticated user.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>GitHub API operations. </p>
+<p>Implements authenticated user and repository operations.</p>
+<dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a388f54b8e126c40d787a447e451de8e8" name="a388f54b8e126c40d787a447e451de8e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a388f54b8e126c40d787a447e451de8e8">&#9670;&#160;</a></span>github_create_user_repo()</h2>
 
@@ -136,14 +143,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>create github repo </p>
+<p>Create a repository for the authenticated user. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_repo_name</td><td>name of repository as string format </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_repo_name</td><td>Non-empty repository name. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if runs well or EXIT_FAILURE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>
@@ -166,15 +173,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>delete github repo </p>
+<p>Delete a repository owned by the authenticated user. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_repo_name</td><td>name of repository as string format </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>as <a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> struct format </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_repo_name</td><td>Non-empty repository name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>Configuration containing the login and API token. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if runs well or EXIT_FAILURE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>
@@ -193,14 +200,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get github user informations </p>
+<p>Retrieve the authenticated user's login. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>as <a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> struct format </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">p_github_conf</td><td>Configuration containing the token and receiving the user's login. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if runs well or EXIT_FAILURE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>
@@ -219,14 +226,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>get github user repo informations </p>
+<p>List all public and private repositories accessible to the token. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>as <a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> struct format </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>Configuration containing the API token. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if runs well or EXIT_FAILURE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>
@@ -245,8 +252,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Read the GitHub token from the GITHUB_TOKEN environment variable. </p>
-<dl class="section return"><dt>Returns</dt><dd>pointer to the environment-owned token, or NULL when unset </dd></dl>
+<p>Read the API token from the <span class="tt">GITHUB_TOKEN</span> environment variable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Borrowed pointer to the environment-owned token, or NULL if unset. </dd></dl>
 
 </div>
 </div>
@@ -265,14 +272,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>initialize github struct. </p>
+<p>Initialize the configuration and retrieve the authenticated user. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_github_conf</td><td>as <a class="el" href="github_8h.html#a19c59566361805ad135e85910a8a2b8a">github_conf_t</a> struct format </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_github_conf</td><td>Configuration structure to initialize. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS if runs well or EXIT_FAILURE </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>EXIT_SUCCESS on success, otherwise EXIT_FAILURE. </dd></dl>
 
 </div>
 </div>

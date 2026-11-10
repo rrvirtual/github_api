@@ -131,6 +131,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad24a8fb28d9ad93cd040400fccbe5a57" id="r_ad24a8fb28d9ad93cd040400fccbe5a57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a6ba04397e746e14190b646e474a7ac6e">cmd_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad24a8fb28d9ad93cd040400fccbe5a57">params_handle</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:ad24a8fb28d9ad93cd040400fccbe5a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse command-line options into a command argument structure.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="a6ba04397e746e14190b646e474a7ac6e" name="a6ba04397e746e14190b646e474a7ac6e"></a>
@@ -188,6 +189,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Parse command-line options into a command argument structure. </p>
+<p>Displays usage information and exits when help is requested or the options do not select a valid action.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argc</td><td>Number of command-line arguments. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">argv</td><td>Command-line argument vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to static command arguments; valid until the next call. </dd></dl>
 
 </div>
 </div>

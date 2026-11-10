@@ -77,12 +77,13 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">params.c File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>input arguments.  
+<p>Command-line option parsing.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;getopt.h&gt;</code><br />
 <code>#include &lt;stdio.h&gt;</code><br />
@@ -117,9 +118,15 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad24a8fb28d9ad93cd040400fccbe5a57" id="r_ad24a8fb28d9ad93cd040400fccbe5a57"><td class="memItemLeft" align="right" valign="top"><a class="el" href="params_8h.html#a6ba04397e746e14190b646e474a7ac6e">cmd_args_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad24a8fb28d9ad93cd040400fccbe5a57">params_handle</a> (int argc, char **argv)</td></tr>
+<tr class="memdesc:ad24a8fb28d9ad93cd040400fccbe5a57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse command-line options into a command argument structure.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a851daaa4b15fcfa571a587989e3b94c5" id="r_a851daaa4b15fcfa571a587989e3b94c5"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="help_8h.html#a1c1759d107c2eeb9cbf5926fa94bfede">help_description_t</a> const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a851daaa4b15fcfa571a587989e3b94c5">help</a> []</td></tr>
+<tr class="memitem:ab449a9b5605affbcf883b24fce6af41a" id="r_ab449a9b5605affbcf883b24fce6af41a"><td class="memItemLeft" align="right" valign="top">static struct option const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab449a9b5605affbcf883b24fce6af41a">longopts</a> []</td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>input arguments. </p>
+<div class="textblock"><p>Command-line option parsing. </p>
 <dl class="section user"><dt></dt><dd>COPYRIGHT NOTICE: (c) 2024 Rodrigo Junior. All rights reserved. </dd></dl>
 </div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
 <a id="ab83a4310aa4a162f32d03cfea3a90ce4" name="ab83a4310aa4a162f32d03cfea3a90ce4"></a>
@@ -170,6 +177,80 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Parse command-line options into a command argument structure. </p>
+<p>Displays usage information and exits when help is requested or the options do not select a valid action.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argc</td><td>Number of command-line arguments. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">argv</td><td>Command-line argument vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to static command arguments; valid until the next call. </dd></dl>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Variable Documentation</h2>
+<a id="a851daaa4b15fcfa571a587989e3b94c5" name="a851daaa4b15fcfa571a587989e3b94c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a851daaa4b15fcfa571a587989e3b94c5">&#9670;&#160;</a></span>help</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="help_8h.html#a1c1759d107c2eeb9cbf5926fa94bfede">help_description_t</a> const help[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;Show this help&quot;</span>                           , NULL},</div>
+<div class="line">    {<span class="stringliteral">&quot;Create a repo&quot;</span>                            , <span class="stringliteral">&quot;[name]&quot;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;Delete a repo&quot;</span>                            , <span class="stringliteral">&quot;[name]&quot;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;List the Users repo&quot;</span>                      , NULL},</div>
+<div class="line">    {<span class="stringliteral">&quot;List the MR Open&quot;</span>                         , <span class="stringliteral">&quot;[name]&quot;</span>},</div>
+<div class="line">    {NULL, NULL}</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab449a9b5605affbcf883b24fce6af41a" name="ab449a9b5605affbcf883b24fce6af41a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab449a9b5605affbcf883b24fce6af41a">&#9670;&#160;</a></span>longopts</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">struct option const longopts[]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">{</div>
+<div class="line">    {<span class="stringliteral">&quot;help&quot;</span>,            no_argument,       NULL, <span class="charliteral">&#39;h&#39;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;create&quot;</span>,          required_argument, NULL, <span class="charliteral">&#39;c&#39;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;delete&quot;</span>,          required_argument, NULL, <span class="charliteral">&#39;d&#39;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;list&quot;</span>,            no_argument,       NULL, <span class="charliteral">&#39;l&#39;</span>},</div>
+<div class="line">    {<span class="stringliteral">&quot;list_mr&quot;</span>,         required_argument, NULL, <span class="charliteral">&#39;m&#39;</span>},</div>
+<div class="line">    {NULL,              no_argument,       NULL,  0}</div>
+<div class="line">}</div>
+</div><!-- fragment -->
 </div>
 </div>
 </div><!-- contents -->
